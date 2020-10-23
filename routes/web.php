@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::resources([
+    'projects' => 'ProjectController',
+    'tasks' => 'TaskController',
+]);
+
+Route::get('/project/getTasks/{id}', 'ProjectController@getTasks')->name('projects.tasks');
+Route::post('/tasks/reorder', 'TaskController@reorder')->name('task.reorder');
